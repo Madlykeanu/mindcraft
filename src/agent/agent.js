@@ -63,12 +63,20 @@ export class Agent {
     }
 
     cleanChat(message) {
-        // newlines are interpreted as separate chats, which triggers spam filters. replace them with spaces
-        message = message.replaceAll('\n', '  ');
+        if (!message || message.trim() === '') return message; // Add this check
+
+        // Replace newlines with spaces
+        message = message.replace(/\n/g, '  ');
+
+        // Remove leading/trailing whitespace
+        message = message.trim();
+
         return this.bot.chat(message);
     }
 
     async handleMessage(source, message) {
+        if (!message || message.trim() === '') return; // Add this check
+
         if (!!source && !!message)
             await this.history.add(source, message);
 

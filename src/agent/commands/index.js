@@ -16,6 +16,8 @@ const commandRegex = /!(\w+)(?:\(((?:[^)(]+|'[^']*'|"[^"]*")*)\))?/
 const argRegex = /(?:"[^"]*"|'[^']*'|[^,])+/g;
 
 export function containsCommand(message) {
+    if (!message || message.trim() === '') return null; // Add this check
+
     const commandMatch = message.match(commandRegex);
     if (commandMatch)
         return "!" + commandMatch[1];
